@@ -1,5 +1,5 @@
 // !!! ВСТАВЬ СЮДА URL ТВОЕГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT !!!
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbeb89ZnZ1hN6KX8Mz84TznIwRIXHdoXDcTuKjzlumqMeLy8WfxIqwmd1iRA6JvA2DaA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzW9NIToZDG8gPoeg1qlCO0xCXtjJhKXvrif4mTW6WSfkzAOmSX98kcRwXg8CBx3FBZtQ/exec';
 
 const form = document.getElementById('expenseForm');
 const submitButton = document.getElementById('submitButton');
