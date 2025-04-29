@@ -65,7 +65,13 @@
     <h2>Последние расходы</h2>
     <p>(Отображение расходов здесь пока не реализовано)</p>
 
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzW9NIToZDG8gPoeg1qlCO0xCXtjJhKXvrif4mTW6WSfkzAOmSX98kcRwXg8CBx3FBZtQ/exec'; // !!! ЗАМЕНИ НА СВОЙ URL !!!
 
-    <script src="script.js"></script>
+        fetch(SCRIPT_URL)
+          .then(response => response.text())
+          .then(data => console.log(data))
+          .catch(error => console.error('Ошибка:', error));
+    </script>
 </body>
 </html>
