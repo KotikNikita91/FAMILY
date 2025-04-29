@@ -10,7 +10,7 @@
         form div { margin-bottom: 10px; }
         label { display: block; margin-bottom: 5px; }
         input[type="text"], input[type="number"], select, textarea { width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 3px; }
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        <button type="button" id="submitButton" onclick="alert('Кнопка нажата прямо в HTML!');">Добавить</button>
         button:hover { background-color: #0056b3; }
         button:disabled { background-color: #ccc; cursor: not-allowed;}
         #statusMessage { margin-top: 15px; padding: 10px; border-radius: 5px; display: none; /* Скрыто по умолчанию */ }
@@ -57,7 +57,7 @@
             <textarea id="comment" name="comment" rows="3"></textarea>
         </div>
         <div>
-            <button type="button" id="submitButton">Добавить</button>
+            <button type="button" id="submitButton" onclick="alert('Кнопка нажата прямо в HTML!');">Добавить</button>
         </div>
         <div id="statusMessage"></div>
     </form>
@@ -73,9 +73,9 @@
         const submitButton = document.getElementById('submitButton');
         const statusMessage = document.getElementById('statusMessage');
 
-        form.addEventListener('submit', function(e) {
-             console.log('Кнопка "Добавить" нажата!');
-            e.preventDefault(); // Предотвращаем стандартную отправку формы
+        submitButton.addEventListener('click', function(e) {
+            e.preventDefault(); // Хотя для button type="button" preventDefault не обязателен
+            console.log('Кнопка "Добавить" нажата! - ТЕСТ'); // <---- УБЕРИ ЭТУ СТРОКУ ПОСЛЕ ТЕСТА
 
             // Блокируем кнопку и показываем статус
             submitButton.disabled = true;
