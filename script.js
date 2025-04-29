@@ -7,7 +7,7 @@ const statusMessage = document.getElementById('statusMessage');
 
 submitButton.addEventListener('click', function(e) {
     e.preventDefault(); // Хотя для button type="button" preventDefault не обязателен
-    console.log('Кнопка "Добавить" нажата! - ТЕСТ'); // <---- ДОБАВЬ ЭТУ СТРОКУ
+    console.log('Кнопка "Добавить" нажата! - ТЕСТ'); // <---- УБЕРИ ЭТУ СТРОКУ ПОСЛЕ ТЕСТА
 
     // Блокируем кнопку и показываем статус
     submitButton.disabled = true;
