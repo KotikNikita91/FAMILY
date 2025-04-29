@@ -38,6 +38,7 @@ form.addEventListener('submit', function(e) {
             });
         }
          // Если все ок с HTTP, парсим JSON-ответ от Apps Script
+        console.log(response)
         return response.json();
     })
     .then(data => {
