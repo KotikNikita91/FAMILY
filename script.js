@@ -7,7 +7,7 @@ const statusMessage = document.getElementById('statusMessage');
 
 submitButton.addEventListener('click', function(e) {
     e.preventDefault(); // Хотя для button type="button" preventDefault не обязателен
-    console.log('Кнопка "Добавить" нажата! - ТЕСТ'); // <---- УБЕРИ ЭТУ СТРОКУ ПОСЛЕ ТЕСТА
+    console.log('Кнопка "Добавить" нажата!');
 
     // Блокируем кнопку и показываем статус
     submitButton.disabled = true;
@@ -15,12 +15,15 @@ submitButton.addEventListener('click', function(e) {
 
     // Собираем данные из формы
     const formData = new FormData(form);
+    console.log('FormData:', formData.get('who'), formData.get('amount'), formData.get('category'), formData.get('comment'));
+
     const dataToSend = {
         who: formData.get('who'),
         amount: formData.get('amount'),
         category: formData.get('category'),
         comment: formData.get('comment')
     };
+    console.log('Data to send:', dataToSend);
 
     // Отправляем данные асинхронно с помощью Fetch API
     fetch(SCRIPT_URL, {
