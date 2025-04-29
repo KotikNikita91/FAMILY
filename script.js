@@ -1,84 +1,104 @@
-// !!! ВСТАВЬ СЮДА URL ТВОЕГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT !!!
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwnpHDwfneSC-ITLNtjXIxUz8pmL7yeQovBeSarK9AXkEO4iDquM-AjMEgzog4p5RO87A/exec';
-
-console.log('Скрипт script.js загружен!');
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyu_RykMdTKm_enaxIJf79KerTLJH1w_-f-xaXt3zlZepQpDm1-Sz3nbjC4IkxLxzROgA/exec';
 
 const form = document.getElementById('expenseForm');
 const submitButton = document.getElementById('submitButton');
 const statusMessage = document.getElementById('statusMessage');
+const expensesList = document.getElementById('expensesList'); // Предполагается элемент для отображения расходов
 
 submitButton.addEventListener('click', function(e) {
-    e.preventDefault(); // Хотя для button type="button" preventDefault не обязателен
-    console.log('Кнопка "Добавить" нажата!');
+    e.preventDefault();
 
-    // Блокируем кнопку и показываем статус
     submitButton.disabled = true;
-    showStatus("Отправка данных...", "info"); // "info" - просто для стилизации или логгирования
+    showStatus("Отправка данных...", "info");
 
-    // Собираем данные из формы
     const formData = new FormData(form);
-    console.log('FormData:', formData.get('who'), formData.get('amount'), formData.get('category'), formData.get('comment'));
-
     const dataToSend = {
-        who: formData.get('who'),
-        amount: formData.get('amount'),
+        type: 'expense',
+        amount: parseFloat(formData.get('amount')), // Преобразуем в число
         category: formData.get('category'),
-        comment: formData.get('comment')
+        comment: formData.get('comment'),
+        author: formData.get('who')
     };
-    console.log('Data to send:', dataToSend);
 
-    // Отправляем данные асинхронно с помощью Fetch API
     fetch(SCRIPT_URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json', // Указываем, что шлем JSON
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dataToSend) // Преобразуем объект JS в JSON-строку
+        body: JSON.stringify(dataToSend)
     })
     .then(response => {
-        // Проверяем, успешно ли прошел сам HTTP-запрос
         if (!response.ok) {
-            // Если HTTP-статус ошибки (4xx, 5xx), пытаемся прочитать текст ошибки
             return response.text().then(text => {
                 throw new Error(`HTTP ошибка! Статус: ${response.status}. Сообщение: ${text || 'Нет дополнительной информации'}`);
             });
         }
-         // Если все ок с HTTP, парсим JSON-ответ от Apps Script
         return response.json();
     })
     .then(data => {
-        // Анализируем ответ от нашего скрипта Apps Script
         if (data.status === "success") {
             showStatus("Успешно добавлено!", "success");
-            form.reset(); // Очищаем форму
+            form.reset();
+            loadExpenses(); // Загружаем обновленный список расходов
         } else {
-            // Показываем сообщение об ошибке, которое вернул скрипт
             showStatus(`Ошибка скрипта: ${data.message || 'Неизвестная ошибка'}`, "error");
         }
     })
     .catch(error => {
-        // Обрабатываем ошибки сети или ошибки при парсинге JSON
         console.error('Ошибка при отправке данных:', error);
         showStatus(`Ошибка сети или ответа: ${error.message}`, "error");
     })
     .finally(() => {
-        // В любом случае (успех или ошибка) снова включаем кнопку
         submitButton.disabled = false;
-        // Скрываем сообщение через некоторое время
-        setTimeout(hideStatus, 5000); // Скрыть через 5 секунд
+        setTimeout(hideStatus, 5000);
     });
 });
 
-// Вспомогательная функция для показа сообщений
-function showStatus(message, type) {
-    statusMessage.textContent = message;
-    statusMessage.className = type; // Устанавливаем класс для стилизации (success, error)
-    statusMessage.style.display = 'block'; // Показываем блок
+function loadExpenses() {
+    fetch(SCRIPT_URL) // GET-запрос на тот же URL для получения данных
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(`HTTP ошибка при загрузке расходов: ${response.status}. Сообщение: ${text || 'Нет дополнительной информации'}`);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data && data.expenses && expensesList) {
+            expensesList.innerHTML = ''; // Очищаем список
+            if (data.expenses.length > 0) {
+                const ul = document.createElement('ul');
+                data.expenses.forEach(expense => {
+                    const li = document.createElement('li');
+                    li.textContent = `${expense.date.substring(0, 10)} - ${expense.amount} ${expense.category} (${expense.author || 'Общий'}) - ${expense.comment || ''}`;
+                    ul.appendChild(li);
+                });
+                expensesList.appendChild(ul);
+            } else {
+                expensesList.textContent = 'Расходов пока нет.';
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при загрузке расходов:', error);
+        if (expensesList) {
+            expensesList.textContent = `Ошибка загрузки расходов: ${error.message}`;
+        }
+    });
 }
 
-// Вспомогательная функция для скрытия сообщений
+function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = type;
+    statusMessage.style.display = 'block';
+}
+
 function hideStatus() {
     statusMessage.style.display = 'none';
     statusMessage.textContent = '';
     statusMessage.className = '';
 }
+
+// Загружаем расходы при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadExpenses);
