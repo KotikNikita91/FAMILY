@@ -1,5 +1,5 @@
 // !!! ВСТАВЬ СЮДА URL ТВОЕГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT !!!
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbym_zwwf9w0wjyEdJq-ZhrC-ZtROj2LNr7SKSDbrQDJM2dMWjoc8mHubRtKTUZ_jv9qzA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3KpUED39-7qwNZZSdtBHba8-Y5mIMCTu1YIvz556jDXFraflaUWr-EqNKJemScTcu/exec';
 
 console.log('Скрипт script.js загружен!');
 
