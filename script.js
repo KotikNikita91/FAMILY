@@ -1,6 +1,8 @@
 // !!! ВСТАВЬ СЮДА URL ТВОЕГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT !!!
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbym_zwwf9w0wjyEdJq-ZhrC-ZtROj2LNr7SKSDbrQDJM2dMWjoc8mHubRtKTUZ_jv9qzA/exec';
 
+console.log('Скрипт script.js загружен!');
+
 const form = document.getElementById('expenseForm');
 const submitButton = document.getElementById('submitButton');
 const statusMessage = document.getElementById('statusMessage');
