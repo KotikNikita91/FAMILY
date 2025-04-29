@@ -13,9 +13,12 @@
         button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
         button:hover { background-color: #0056b3; }
         button:disabled { background-color: #ccc; cursor: not-allowed;}
-        #statusMessage { margin-top: 15px; padding: 10px; border-radius: 5px; display: none; /* Скрыто по умолчанию */ }
+        #statusMessage { margin-top: 15px; padding: 10px; border-radius: 5px; display: none; }
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        h2 { margin-top: 20px; }
+        #expensesList ul { list-style-type: none; padding: 0; }
+        #expensesList li { margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
     </style>
 </head>
 <body>
@@ -41,15 +44,18 @@
             <input type="text" id="category" name="category" list="categories" placeholder="Например: Продукты" required>
             <datalist id="categories">
                 <option value="Продукты">
-                <option value="Транспорт">
+                <option value="Здоровье">
                 <option value="Кафе/Рестораны">
-                <option value="ЖКХ">
+                <option value="Коммуналка">
                 <option value="Развлечения">
                 <option value="Одежда">
-                <option value="Бытовая химия">
-                <option value="Здоровье">
-                <option value="Подарки">
-                <option value="Другое">
+                <option value="Дом">
+                <option value="Кот">
+                <option value="Автомобиль">
+                <option value="Связь">
+                <option value="Обед на работе">
+                <option value="Косметика">
+                <option value="Непредвиденное">
             </datalist>
         </div>
         <div>
@@ -63,7 +69,8 @@
     </form>
 
     <h2>Последние расходы</h2>
-    <p>(Отображение расходов здесь пока не реализовано)</p>
+    <div id="expensesList">
+        </div>
 
     <script src="script.js"></script>
 </body>
