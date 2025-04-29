@@ -5,8 +5,9 @@ const form = document.getElementById('expenseForm');
 const submitButton = document.getElementById('submitButton');
 const statusMessage = document.getElementById('statusMessage');
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault(); // Предотвращаем стандартную отправку формы
+submitButton.addEventListener('click', function(e) {
+    e.preventDefault(); // Хотя для button type="button" preventDefault не обязателен
+    console.log('Кнопка "Добавить" нажата!');
 
     // Блокируем кнопку и показываем статус
     submitButton.disabled = true;
@@ -38,7 +39,6 @@ form.addEventListener('submit', function(e) {
             });
         }
          // Если все ок с HTTP, парсим JSON-ответ от Apps Script
-        console.log(response)
         return response.json();
     })
     .then(data => {
